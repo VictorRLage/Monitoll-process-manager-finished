@@ -118,16 +118,6 @@ except:
     strip2_RamAtual = trim3ramSpeed.strip()
 
 
-
-print(strip_SerialIdAtual)
-print(strip3_OsAtual)
-print(strip3_MaquinaAtual)
-print(strip2_ProcessadorAtual)
-print(strip2_DiscoAtual)
-print(strip2_RamAtual)
-time.sleep(100)
-
-
 # POGGERS BAR
 def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
@@ -229,42 +219,106 @@ def BuscarTorres(fkEmpresa):
 def EscolherTorres(idTorres):
     for x in idTorres:
         print('Maquina:', x[0])
-    global idTorre
     idTorre = input('Qual é esta maquina? ')
-    VerificarDadosMaquina(idTorre)
+    BuscarComponentes(idTorre)
+
+def BuscarComponentes(idTorre):
+
+    # PEGAR fkCOMPONENTE
+    try:
+        crsr.execute('''
+        SELECT fkComponente FROM Torre_Componente WHERE Torre_Componente.fkTorre = ?
+        ''', idTorre)
+        fkComponentes = crsr.fetchall()
+        if 25 in fkComponentes:
+            VerificarDadosMaquina(idTorre)
+        else:
+            print('Você não selecionou a captura de processos como parte do seu plano para esta maquina.')
+            print('Por favor entre em contato com a gente para aumentar seu plano!')
+
+    except pyodbc.Error as err:
+        print("Something went wrong: {}".format(err))
 
 
-array_dados = []
-array_pids = []
-for proc in psutil.process_iter(['pid']):
-    array_pids.append(proc.pid)
+def VerificarDadosMaquina(idTorre):
+
+    try:
+        crsr.execute('''
+        SELECT SerialID FROM Torre WHERE idTorre = ?
+        ''', idTorre)
+        # Executando comando SQL
+        print("Verificando dados da torre...")
+        SerialIdBanco = crsr.fetchone()
+
+    except pyodbc.Error as err:
+        print("Something went wrong: {}".format(err))
+        print("Não foi possivel verificar os dados da maquina.")
+        print("Por favor tente novamente mais tarde!")
+
+    if SerialIdBanco[0] != '':
+        print("A torre possui dados cadastrados")
+        InserirLeitura()
+    else:
+        print("A torre não possui dados")
+        InserirDadosMaquina(strip_SerialIdAtual, strip3_OsAtual, strip3_MaquinaAtual,
+                            strip2_ProcessadorAtual, strip2_DiscoAtual, strip2_RamAtual, idTorre)
+        
+def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idTorre):
+
+    try:
+        crsr.execute('''
+        UPDATE Torre  SET SerialID = ?,  SO = ?, Maquina = ?, Processador = ?, Disco = ?, Ram = ?,  fkEmpresa = ? WHERE idTorre = ?
+        ''', SerialID, OS, Maquina, Processador, Disco, RamSpeed, fkEmpresa, idTorre)
+        # Executando comando SQL
+        # Commit de mudanças no banco de dados
+        crsr.commit()
+        print("Dados da maquina cadastrados!")
+
+    except pyodbc.Error as err:
+        crsr.rollback()
+        print("Something went wrong: {}".format(err))
+        print("Não foi possivel cadastrar os dados da maquina.")
+        print("Por favor tente novamente mais tarde!")
+
+def InserirLeitura():
+    while True:
+        array_dados = []
+        array_pids = []
+        for proc in psutil.process_iter(['pid']):
+            array_pids.append(proc.pid)
 
 
-# print(array_pids)
-# print(len(array_pids))
+        # print(array_pids)
+        # print(len(array_pids))
 
-print('Iniciando Leitura!')
-nucleos = psutil.cpu_count()
+        print('Iniciando Leitura!')
+        nucleos = psutil.cpu_count()
 
-# print("NOME | PID | STATUS | USO CPU | USO RAM")
-for i, proc in enumerate(psutil.process_iter()):
-    n = proc.name()
-    p = proc.ppid()
-    s = proc.status()
-    c = float(proc.cpu_percent(interval=1)/nucleos)
-    m = proc.memory_percent()
-    array_dados.append(
-        '{"name":c, "pid":p, "status":s, "uso_cpu":c, "uso_ram":m}')
+        # print("NOME | PID | STATUS | USO CPU | USO RAM")
+        for i, proc in enumerate(psutil.process_iter()):
+            n = proc.name()
+            p = proc.ppid()
+            s = proc.status()
+            c = float(proc.cpu_percent(interval=1)/nucleos)
+            m = proc.memory_percent()
+            array_dados.append(
+                '{"name":c, "pid":p, "status":s, "uso_cpu":c, "uso_ram":m}')
 
-    # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
-    progress_bar(i+1, len(array_pids))
-progress_bar(1, 1)
+            # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
+            progress_bar(i+1, len(array_pids))
+        progress_bar(1, 1)
 
-print(colorama.Fore.RESET)
-print(f"\r")
+        print(colorama.Fore.RESET)
+        print(f"\r")
+        print(array_dados)
+        print(len(array_dados))
+        time.sleep(30)
 
 
-print(array_dados)
-print(len(array_dados))
 
-time.sleep(100)
+
+
+
+
+
+
