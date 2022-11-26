@@ -23,7 +23,7 @@ for i, x in enumerate(numbers):
 
 print(colorama.Fore.RESET)
 print('\r')
-print('Confirmado"')
+print('Confirmado!')
 print()
 time.sleep(5)
 print("O "+v+" é gay")
