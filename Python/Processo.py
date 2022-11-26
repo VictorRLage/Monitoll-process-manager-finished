@@ -9,7 +9,7 @@ def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
     barra = '█' * int(porcentagem) + '-' * (100 - int(porcentagem))
     print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
-    if progresso > (total-(total*0.10)):
+    if progresso > (total-(total*0.02)):
         porcentagem = 100
         print(colorama.Fore.GREEN + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
 
