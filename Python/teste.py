@@ -1,6 +1,9 @@
 import psutil
 import time
 
-psutil.process_iter(['pid'])
+c = psutil.pids()
+print(c)
+
+
 
 time.sleep(100)

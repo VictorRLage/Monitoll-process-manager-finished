@@ -7,38 +7,44 @@ def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
     barra = '█' * int(porcentagem) + '-' *(100 - int(porcentagem))
     print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
-    if progresso > total-2:
-        total = 100.00
+    if progresso == total:
         print(colorama.Fore.GREEN + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
 
 
 global array_pids
 array_pids = []
-global array_cpu
-array_cpu = []
+global array_dados
+array_dados = []
 
 
-for proc in psutil.process_iter(['pid']):
-    array_pids.append(proc.pid)
+
 
 # print(array_pids)
 # print(len(array_pids))
 
 print('Iniciando Leitura!')
 nucleos = psutil.cpu_count()
-print(nucleos)
-# progress_bar(0, len(array_pids))
-for i, proc in enumerate(psutil.process_iter(['memory_percent','status', 'name', 'pid'])):
-    c = float(proc.cpu_percent(interval=1)/nucleos)
-    array_cpu.append(c)
-    print(proc,c)
-    # progress_bar(i+1, len(array_pids))
 
-# print(array_cpu)
-# print(len(array_cpu))
+progress_bar(0, len(array_pids))
+# print("NOME | PID | STATUS | USO CPU | USO RAM")
+
+for i, proc in enumerate(psutil.process_iter()):
+    for proc in psutil.process_iter(['pid']):
+        array_pids.append(proc.pid)
+    n = proc.name()
+    p = proc.ppid()
+    s = proc.status()
+    c = float(proc.cpu_percent(interval=1)/nucleos)
+    m = proc.memory_percent()
+    array_dados.append('{"name":c, "pid":p, "status":s, "uso_cpu":c, "uso_ram":m}')
+
+    # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
+    progress_bar(i+1, len(array_pids))
+
+
 print(colorama.Fore.RESET)
 print(f"\r")
-print(len(array_pids))
-print(array_cpu)
+print(array_dados)
+print(len(array_dados))
 
 time.sleep(100)
