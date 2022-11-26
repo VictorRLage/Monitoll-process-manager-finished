@@ -9,9 +9,9 @@ def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
     barra = '█' * int(porcentagem) + '-' * (100 - int(porcentagem))
     print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
-    if progresso == total:
-        print(colorama.Fore.GREEN +
-              f"\r|{barra}| {porcentagem:.2f}%", end="\r")
+    if progresso > (total-(total*0.10)):
+        porcentagem = 100
+        print(colorama.Fore.GREEN + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
 
 
 array_dados = []
@@ -28,10 +28,6 @@ nucleos = psutil.cpu_count()
 
 # print("NOME | PID | STATUS | USO CPU | USO RAM")
 for i, proc in enumerate(psutil.process_iter()):
-    array_pids = []
-    for proc in psutil.process_iter(['pid']):
-        array_pids.append(proc.pid)
-    
     n = proc.name()
     p = proc.ppid()
     s = proc.status()
