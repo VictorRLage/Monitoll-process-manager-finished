@@ -28,6 +28,7 @@ for proc in psutil.process_iter(['name', 'pid']):
 # print(array_pids)
 # print(len(array_pids))
 
+print('Iniciando verificação!')
 progress_bar(0, len(array_pids))
 for i, proc in enumerate(psutil.process_iter(['memory_percent','status', 'cpu_percent', 'name', 'pid'])):
     c = proc.cpu_percent(interval=1)
