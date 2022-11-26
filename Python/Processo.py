@@ -5,15 +5,10 @@ import colorama
 # POGGERS BAR
 def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
-    barra = '█' * int(porcentagem) + '-' *(100 - int(porcentagem))
+    barra = 'x' * int(porcentagem) + '-' *(100 - int(porcentagem))
     print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
     if progresso == total:
         print(colorama.Fore.GREEN + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
-
-
-
-
-
 
 
 global array_pids
