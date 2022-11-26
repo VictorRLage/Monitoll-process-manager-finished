@@ -316,7 +316,7 @@ def InserirLeitura():
 
 
 
-
+Conexao()
 
 
 
