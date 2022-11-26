@@ -40,7 +40,6 @@ for i, proc in enumerate(psutil.process_iter(['memory_percent','status', 'cpu_pe
 print(colorama.Fore.RESET)
 print(f"\r")
 print(len(array_pids))
-print("Confirmado!")
-print("O Marco é gay")
+print(array_cpu)
 
 time.sleep(100)
