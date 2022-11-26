@@ -3,20 +3,21 @@ import time
 import colorama
 
 # POGGERS BAR
+
+
 def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
-    porcentagem = 100 * (progresso/int(total))
-    barra = '█' * int(porcentagem) + '-' *(100 - int(porcentagem))
+    porcentagem = 100 * (progresso/float(total))
+    barra = '█' * int(porcentagem) + '-' * (100 - int(porcentagem))
     print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
     if progresso == total:
-        print(colorama.Fore.GREEN + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
+        print(colorama.Fore.GREEN +
+              f"\r|{barra}| {porcentagem:.2f}%", end="\r")
 
 
-global array_pids
-array_pids = []
-global array_dados
 array_dados = []
-
-
+array_pids = []
+for proc in psutil.process_iter(['pid']):
+    array_pids.append(proc.pid)
 
 
 # print(array_pids)
@@ -25,18 +26,19 @@ array_dados = []
 print('Iniciando Leitura!')
 nucleos = psutil.cpu_count()
 
-progress_bar(0, len(array_pids))
 # print("NOME | PID | STATUS | USO CPU | USO RAM")
-
 for i, proc in enumerate(psutil.process_iter()):
+    array_pids = []
     for proc in psutil.process_iter(['pid']):
         array_pids.append(proc.pid)
+    
     n = proc.name()
     p = proc.ppid()
     s = proc.status()
     c = float(proc.cpu_percent(interval=1)/nucleos)
     m = proc.memory_percent()
-    array_dados.append('{"name":c, "pid":p, "status":s, "uso_cpu":c, "uso_ram":m}')
+    array_dados.append(
+        '{"name":c, "pid":p, "status":s, "uso_cpu":c, "uso_ram":m}')
 
     # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
     progress_bar(i+1, len(array_pids))
