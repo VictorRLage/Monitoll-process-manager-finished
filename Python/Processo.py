@@ -9,8 +9,7 @@ def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
     barra = '█' * int(porcentagem) + '-' * (100 - int(porcentagem))
     print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
-    if progresso > (total-(total*0.02)):
-        porcentagem = 100
+    if progresso == total:
         print(colorama.Fore.GREEN + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
 
 
@@ -38,7 +37,7 @@ for i, proc in enumerate(psutil.process_iter()):
 
     # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
     progress_bar(i+1, len(array_pids))
-
+progress_bar(1, 1)
 
 print(colorama.Fore.RESET)
 print(f"\r")
