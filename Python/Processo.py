@@ -354,6 +354,11 @@ def InserirDados(idTorre,dict_dados):
             crsr.execute('''
             insert into ProcessoDinamica values(?,?,?,?,?,?,?,?,?)
             ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel,DataHora, idTorre)
+
+            crsr.execute('''
+            insert into ProcessoBackup values(?,?,?,?,?,?,?,?,?)
+            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel, DataHora, idTorre)
+
             crsr.commit()
             progress_bar(i+1, len(dict_dados))
         except pyodbc.Error as err:
