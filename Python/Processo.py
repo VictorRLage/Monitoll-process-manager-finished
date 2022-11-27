@@ -326,10 +326,8 @@ def VerificarProcessos(idTorre,json_dados):
     print(idTorre)
     try:
         crsr.execute('''
-        SELECT TOP ? * FROM Processo WHERE idTorre = ? ORDER BY idProcesso DESC
-        ''', lenDados,idTorre)
-        # Executando comando SQL
-        # Commit de mudanças no banco de dados
+        SELECT TOP 10 * FROM Processo WHERE idTorre = 162 ORDER BY idProcesso DESC
+        ''')
         array_proc = crsr.fetchall()
         print('pinto')
         print(array_proc)
@@ -337,7 +335,6 @@ def VerificarProcessos(idTorre,json_dados):
 
     except pyodbc.Error as err:
         print('erro aqui')
-        crsr.rollback()
         print("Something went wrong: {}".format(err))
 
 
