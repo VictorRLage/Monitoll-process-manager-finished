@@ -322,6 +322,8 @@ def CapturarLeitura(idTorre):
 
 def VerificarProcessos(idTorre,json_dados):
     lenDados = len(json_dados)
+    print(lenDados)
+    print(idTorre)
     try:
         crsr.execute('''
         SELECT TOP ? * FROM Processo WHERE idTorre = ? ORDER BY idProcesso DESC
