@@ -2,9 +2,12 @@ import psutil
 import time
 import datetime
 
-for proc in psutil.process_iter():
-    a = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
-    print(a)
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict["brand"])
 
 
 
@@ -14,6 +17,8 @@ for x in a:
     for y in b:
         if x == y:
             print(x,"=",y)
+
+            
 
 
 

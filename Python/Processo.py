@@ -310,13 +310,13 @@ def CapturarLeitura(idTorre):
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
             dict_dados.append({
-                    "name":{n},
-                    "pid":{p}, 
-                    "status":{s}, 
-                    "usoCpu":{c}, 
-                    "usoRam":{m}, 
-                    "dataCriacao":{d}, 
-                    "confiavel":{nao}
+                    "name":"{n}",
+                    "pid":"{p}", 
+                    "status":"{s}", 
+                    "usoCpu":"{c}", 
+                    "usoRam":"{m}", 
+                    "dataCriacao":"{d}", 
+                    "confiavel":"{nao}"
                     })
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
