@@ -331,14 +331,45 @@ def VerificarProcessos(idTorre,json_dados):
         ''', intLenDados, idTorre)
         array_proc = crsr.fetchall()
         print(array_proc)
-        for x in array_proc:
-            for y in json_dados:
-                if x[0] == y.name:
-                    print(y.name)
+        if len(array_proc) == 0:
+            InserirTodosDados(idTorre,json_dados)
+        else:
+            for x in array_proc:
+                for y in json_dados:
+                    if x[0] == y.name:
+                        print(y.name)
 
     except pyodbc.Error as err:
         print('erro aqui')
         print("Something went wrong: {}".format(err))
+
+        
+def InserirTodosDados(idTorre,json_dados):
+    for z in json_dados:
+        nome = z.name
+        pid = z.pid
+        status = z.Status
+        usoCpu = z.usoCPU
+        usoRam = z.usoRAM
+        dataCriacao = z.dataCriacao
+        confiavel = z.confiavel
+        qtdProcessos = int(len(json_dados))
+        try:
+            crsr.execute('''
+            insert into Processo values(?,?,?,?,?,?,?,?,?)
+            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel, qtdProcessos, idTorre)
+            # Executando comando SQL
+            # Commit de mudanças no banco de dados
+            crsr.commit()
+            print("Primeiros processos cadastrados!")
+
+        except pyodbc.Error as err:
+            crsr.rollback()
+            print("Something went wrong: {}".format(err))
+            print("Não foi possivel cadastrar os primeiros processos.")
+            print("Por favor tente novamente mais tarde!")
+        
+
 
 
 
