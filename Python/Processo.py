@@ -347,6 +347,9 @@ def CapturarLeitura(idTorre,procConfiaveis):
                     dataCriacaoNC = x["dataCriacao"]
                     dadoNC = {"name":nomeNC,"pid":pidNC, "status":statusNC, "usoCpu":usoCpuNC, "usoRam":usoRamNC, "dataCriacao":dataCriacaoNC}
                     naoConfiaveisAtivos.append(dadoNC)
+        for p in naoConfiaveisAtivos:
+            if naoConfiaveisAtivos.count(p) > 1:
+                naoConfiaveisAtivos.remove(p)
         print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivos)," processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
