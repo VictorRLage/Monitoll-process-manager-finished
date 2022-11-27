@@ -292,7 +292,6 @@ def VerificarConfiaveis(idTorre):
         ''', idTorre)
         # Executando comando SQL
         procConfiaveis = crsr.fetchall()
-        print(procConfiaveis)
         CapturarLeitura(idTorre,procConfiaveis)
 
     except pyodbc.Error as err:
@@ -304,6 +303,8 @@ def CapturarLeitura(idTorre,procConfiaveis):
     while True:
         dict_dados = []
         array_pids = []
+        ConfiaveisAtivos = []
+        naoConfiaveisAtivos = []
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
 
@@ -335,9 +336,12 @@ def CapturarLeitura(idTorre,procConfiaveis):
         for x in dict_dados:
             for y in procConfiaveis:
                 if x["name"] == y[0] and x["pid"] == y[1]:
-                    print("Confiavel:",x["name"])
+                    ConfiaveisAtivos.append(x["pid"])
+                    print("Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
+
                 else: 
-                    print("Não Confiavel:",x["name"])
+                    naoConfiaveisAtivos.append(x["pid"])
+                    print("Foram encontrados",len(naoConfiaveisAtivos),"processos NÃO confiaveis ativos")
         print(f"\r")
 
         # InserirDados(idTorre,dict_dados)
