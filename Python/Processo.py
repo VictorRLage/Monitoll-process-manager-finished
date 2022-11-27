@@ -346,6 +346,7 @@ def VerificarProcessos(idTorre,json_dados):
         
 def InserirTodosDados(idTorre,json_dados):
     for z in json_dados:
+        print(z)
         nome = z.name
         pid = z.pid
         status = z.Status
