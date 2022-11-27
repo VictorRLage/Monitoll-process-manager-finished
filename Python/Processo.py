@@ -303,9 +303,9 @@ def VerificarConfiaveis(idTorre):
 def CapturarLeitura(idTorre,procConfiaveis):
     while True:
         dict_dados = []
+        naoConfiaveisAtivos = []
         array_pids = []
         ConfiaveisAtivos = []
-        naoConfiaveisAtivos = []
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
 
@@ -327,6 +327,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
             h = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "dataHoraCaptura":h}
             dict_dados.append(dado)
+            naoConfiaveisAtivos.append(dado)
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))
@@ -338,15 +339,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
             for y in procConfiaveis:
                 if x["name"] == y[0] and x["pid"] == y[1]:
                     ConfiaveisAtivos.append(x["pid"])
-                elif x["name"] != y[0] and x["pid"] != y[1]:
-                    nomeNC = x["name"]
-                    pidNC = x["pid"]
-                    statusNC = x["status"]
-                    usoCpuNC = x["usoCpu"]
-                    usoRamNC = x["usoRam"]
-                    dataCriacaoNC = x["dataCriacao"]
-                    dadoNC = {"name":nomeNC,"pid":pidNC, "status":statusNC, "usoCpu":usoCpuNC, "usoRam":usoRamNC, "dataCriacao":dataCriacaoNC}
-                    naoConfiaveisAtivos.append(dadoNC)
+                    naoConfiaveisAtivos.remove(x)
         print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivos)," processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
