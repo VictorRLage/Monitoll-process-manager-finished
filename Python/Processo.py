@@ -334,6 +334,7 @@ def VerificarProcessos(idTorre,json_dados):
         print('pinto')
 
     except pyodbc.Error as err:
+        print('erro aqui')
         crsr.rollback()
         print("Something went wrong: {}".format(err))
 
