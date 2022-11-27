@@ -288,7 +288,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
 def VerificarConfiaveis(idTorre):
     try:
         crsr.execute('''
-        SELECT * FROM ProcessoConfiavel WHERE fkTorre = ?
+        SELECT Nome,Pid FROM ProcessoConfiavel WHERE fkTorre = ?
         ''', idTorre)
         # Executando comando SQL
         procConfiaveis = crsr.fetchall()
@@ -334,8 +334,9 @@ def CapturarLeitura(idTorre,procConfiaveis):
         print(f"\r")
         for x in dict_dados:
             for y in procConfiaveis:
-                print(x["name"])
                 print(y)
+                print(x["name"])
+                print(y[0])
                 print(x["pid"])
                 print(y[1])
                 if x["name"] == y[0] and x["pid"] == y[1]:
