@@ -326,7 +326,7 @@ def VerificarProcessos(idTorre,json_dados):
     print(idTorre)
     try:
         crsr.execute('''
-        SELECT TOP ? * FROM Processo WHERE fkTorre = ? ORDER BY idProcesso DESC
+        SELECT TOP (?) * FROM Processo WHERE fkTorre = ? ORDER BY idProcesso DESC
         ''', idTorre, idTorre)
         array_proc = crsr.fetchall()
         print('pinto')
