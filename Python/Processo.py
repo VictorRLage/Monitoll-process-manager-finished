@@ -358,8 +358,8 @@ def InserirTodosDados(idTorre,json_dados):
         nome = z["name"]
         pid = z["pid"]
         status = z["status"]
-        usoCpu = z["usoCPU"]
-        usoRam = z["usoRAM"]
+        usoCpu = z["usoCpu"]
+        usoRam = z["usoRam"]
         dataCriacao = z["dataCriacao"]
         confiavel = z["confiavel"]
         qtdProcessos = int(len(json_dados))
