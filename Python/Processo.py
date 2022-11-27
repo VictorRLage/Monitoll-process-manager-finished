@@ -123,7 +123,7 @@ except:
 def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
     barra = '█' * int(porcentagem) + '-' * (100 - int(porcentagem))
-    print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
+    print(color + f"\r |{barra}| {porcentagem:.2f}%", end="\r")
     if progresso == total:
         print(colorama.Fore.GREEN +
               f"\r|{barra}| {porcentagem:.2f}%", end="\r")
@@ -324,6 +324,14 @@ def CapturarLeitura(idTorre):
 
         
 def InserirDados(idTorre,dict_dados):
+    try:
+        crsr.execute('''
+        truncate table ProcessoDinamica
+        ''')
+    except pyodbc.Error as err:
+        crsr.rollback()
+        print("Something went wrong: {}".format(err))
+
     print('Inserindo leitura no banco de dados!')
     for i, z in enumerate(dict_dados):
         nome = z["name"]
@@ -343,9 +351,6 @@ def InserirDados(idTorre,dict_dados):
         DataHora = z["dataHoraCaptura"]
         # print(DataHora)
         try:
-            crsr.execute('''
-            truncate table ProcessoDinamica
-            ''')
             crsr.execute('''
             insert into ProcessoDinamica values(?,?,?,?,?,?,?,?,?)
             ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel,DataHora, idTorre)
