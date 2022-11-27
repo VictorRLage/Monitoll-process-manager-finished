@@ -305,6 +305,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
         array_pids = []
         ConfiaveisAtivos = []
         naoConfiaveisAtivos = []
+        contador = 0
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
 
@@ -344,19 +345,23 @@ def CapturarLeitura(idTorre,procConfiaveis):
                     usoCpuNC = x["usoCpu"]
                     usoRamNC = x["usoRam"]
                     dataCriacaoNC = x["dataCriacao"]
-                    dadoNC = {"name":nomeNC,"pid":pidNC, "status":statusNC, "usoCpu":usoCpuNC, "usoRam":usoRamNC, "dataCriacao":dataCriacaoNC}
+                    contador += 1
+                    dadoNC = {"name":nomeNC,"pid":pidNC, "status":statusNC, "usoCpu":usoCpuNC, "usoRam":usoRamNC, "dataCriacao":dataCriacaoNC, "contador":contador}
                     naoConfiaveisAtivos.append(dadoNC)
         print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivos)," processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
-        VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos)
-        # InserirDados(idTorre,dict_dados)
-        time.sleep(60)
+        VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados)
+        time.sleep(30)
 
-def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos):
+def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
     for w in naoConfiaveisAtivos:
-        if w["usoCpu"] > 0.5 or w["usoRam"] > 0.5:
-            print('Alerta')
+        name = w["name"]
+        if w["usoCpu"] > 80 or w["usoRam"] > 80:
+            print("Alerta: "+name)
+        if w["contador"] >= 2:
+            print("Matar processo "+name)
+    InserirDados(idTorre,dict_dados)
         
 def InserirDados(idTorre,dict_dados):
     try:
