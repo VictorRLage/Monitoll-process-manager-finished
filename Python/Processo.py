@@ -360,8 +360,9 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
         if w["usoCpu"] > 0.2 or w["usoRam"] > 0.2:
             naoConfiaveisAtivosReptindo.append(name)
             print("Alerta: "+name)
-        contador = Counter(naoConfiaveisAtivosReptindo)
-        print(contador)
+    contador = Counter(naoConfiaveisAtivosReptindo)
+    print(contador)
+        
     InserirDados(idTorre,dict_dados)
         
 def InserirDados(idTorre,dict_dados):
