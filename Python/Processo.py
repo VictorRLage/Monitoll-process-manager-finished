@@ -363,9 +363,8 @@ def InserirDados(idTorre,dict_dados):
         except pyodbc.Error as err:
             crsr.rollback()
             print("Something went wrong: {}".format(err))
-            print("Não foi possivel cadastrar esse processo.")
-        print("Primeiros processos cadastrados!")
-        time.sleep(5)
+            print("Não foi possivel cadastrar esse processo.")   
+    print("Primeiros processos cadastrados!")
 
 
 
