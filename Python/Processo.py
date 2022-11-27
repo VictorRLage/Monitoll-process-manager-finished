@@ -349,11 +349,14 @@ def CapturarLeitura(idTorre,procConfiaveis):
         print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivos)," processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
-
+        VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos)
         # InserirDados(idTorre,dict_dados)
-        
         time.sleep(60)
 
+def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos):
+    for w in naoConfiaveisAtivos:
+        if w["usoCpu"] > 0.1 or w["usoRam"] > 0.1:
+            print('Alerta')
         
 def InserirDados(idTorre,dict_dados):
     try:
