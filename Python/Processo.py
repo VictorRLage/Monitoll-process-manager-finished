@@ -296,7 +296,7 @@ def CapturarLeitura(idTorre):
         # print(array_pids)
         # print(len(array_pids))
 
-        print('Iniciando Leitura!')
+        print('Capturando Leitura!')
         nucleos = psutil.cpu_count()
 
         # print("NOME | PID | STATUS | USO CPU | USO RAM")
@@ -318,56 +318,39 @@ def CapturarLeitura(idTorre):
 
         print(colorama.Fore.RESET)
         print(f"\r")
-        VerificarProcessos(idTorre,dict_dados)
-        # AtualizarProcessos(idTorre,json_dados)
-        time.sleep(30)
-
-def VerificarProcessos(idTorre,dict_dados):
-    try:
-        crsr.execute('''
-        SELECT * FROM ProcessoDinamica WHERE fkTorre = ? ORDER BY idProcessoDinamica DESC
-        ''', idTorre)
-        array_proc = crsr.fetchall()
-        print(array_proc)
         InserirDados(idTorre,dict_dados)
-
-    except pyodbc.Error as err:
-        print('erro aqui')
-        print("Something went wrong: {}".format(err))
+        # AtualizarProcessos(idTorre,json_dados)
+        time.sleep(60)
 
         
 def InserirDados(idTorre,dict_dados):
-    for z in dict_dados:
-        print
+    print('Inserindo leitura no banco de dados!')
+    for i, z in enumerate(dict_dados):
         nome = z["name"]
-        print(nome)
+        # print(nome)
         pid = z["pid"]
-        print(pid)
+        # print(pid)
         status = z["status"]
-        print(status)
+        # print(status)
         usoCpu = z["usoCpu"]
-        print(usoCpu)
+        # print(usoCpu)
         usoRam = z["usoRam"]
-        print(usoRam)
+        # print(usoRam)
         dataCriacao = z["dataCriacao"]
-        print(dataCriacao)
+        # print(dataCriacao)
         confiavel = z["confiavel"]
-        print(confiavel)
+        # print(confiavel)
         DataHora = z["dataHoraCaptura"]
-        print(DataHora)
+        # print(DataHora)
         try:
             crsr.execute('''
             insert into ProcessoDinamica values(?,?,?,?,?,?,?,?,?)
             ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel,DataHora, idTorre)
-            # Executando comando SQL
-            # Commit de mudanças no banco de dados
             crsr.commit()
-            print("Cadastrou!")
-
+            progress_bar(i+1, len(dict_dados))
         except pyodbc.Error as err:
             crsr.rollback()
             print("Something went wrong: {}".format(err))
-            print("Não foi possivel cadastrar esse processo.")   
     print("Primeiros processos cadastrados!")
 
 
