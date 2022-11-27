@@ -337,11 +337,11 @@ def CapturarLeitura(idTorre,procConfiaveis):
             for y in procConfiaveis:
                 if x["name"] == y[0] and x["pid"] == y[1]:
                     ConfiaveisAtivos.append(x["pid"])
-                    print("Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
+                    print(colorama.Fore.GREEN +"Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
 
                 else: 
                     naoConfiaveisAtivos.append(x["pid"])
-                    print("Foram encontrados",len(naoConfiaveisAtivos),"processos NÃO confiaveis ativos")
+                    print(colorama.Fore.RED +"Foram encontrados",len(naoConfiaveisAtivos),"processos NÃO confiaveis ativos")
         print(f"\r")
 
         # InserirDados(idTorre,dict_dados)
