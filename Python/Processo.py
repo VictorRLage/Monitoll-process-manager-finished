@@ -123,7 +123,7 @@ except:
 def progress_bar(progresso, total, color=colorama.Fore.YELLOW):
     porcentagem = 100 * (progresso/float(total))
     barra = '█' * int(porcentagem) + '-' * (100 - int(porcentagem))
-    print(color + f"\r |{barra}| {porcentagem:.2f}%", end="\r")
+    print(color + f"\r|{barra}| {porcentagem:.2f}%", end="\r")
     if progresso == total:
         print(colorama.Fore.GREEN +
               f"\r|{barra}| {porcentagem:.2f}%", end="\r")
@@ -362,6 +362,7 @@ def InserirDados(idTorre,dict_dados):
     print(colorama.Fore.RESET)
     print(f"\r")
     print("Primeiros processos cadastrados!")
+    print(f"\r")
 
 
 
