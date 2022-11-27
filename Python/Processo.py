@@ -5,6 +5,7 @@ import pyodbc
 import textwrap
 import subprocess
 import datetime
+import json
 
 
 global strip_SerialIdAtual
@@ -353,21 +354,22 @@ def VerificarProcessos(idTorre,json_dados):
 
         
 def InserirTodosDados(idTorre,json_dados):
-    for z in json_dados:
-        nome = z.name
+    json_dados2 = json.loads(json_dados)
+    for z in json_dados2:
+        nome = z["name"]
         print(nome)
         pid = z["pid"]
-        print(pid[0])
+        print(pid)
         status = z["status"]
-        print(status[0])
+        print(status)
         usoCpu = z["usoCpu"]
-        print(usoCpu[0])
+        print(usoCpu)
         usoRam = z["usoRam"]
-        print(usoRam[0])
+        print(usoRam)
         dataCriacao = z["dataCriacao"]
-        print(dataCriacao[0])
+        print(dataCriacao)
         confiavel = z["confiavel"]
-        print(confiavel[0])
+        print(confiavel)
         qtdProcessos = int(len(json_dados))
         print(qtdProcessos)
         try:
