@@ -293,7 +293,7 @@ def VerificarConfiaveis(idTorre):
         # Executando comando SQL
         procConfiaveis = crsr.fetchall()
         print(procConfiaveis)
-        CapturarLeitura(idTorre,procConfiaveis[0])
+        CapturarLeitura(idTorre,procConfiaveis)
 
     except pyodbc.Error as err:
         print("Something went wrong: {}".format(err))
