@@ -277,16 +277,31 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         # Commit de mudanças no banco de dados
         crsr.commit()
         print("Dados da maquina cadastrados!")
-        CapturarLeitura(idTorre)
+        VerificarConfiaveis(idTorre)
+        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCapturarLeitura(idTorre)
 
     except pyodbc.Error as err:
         crsr.rollback()
         print("Something went wrong: {}".format(err))
         print("Não foi possivel cadastrar os dados da maquina.")
         print("Por favor tente novamente mais tarde!")
-        
 
-def CapturarLeitura(idTorre):
+def VerificarConfiaveis(idTorre):
+    try:
+        crsr.execute('''
+        SELECT * FROM ProcessoConfiavel WHERE idTorre = ?
+        ''', idTorre)
+        # Executando comando SQL
+        procConfiaveis = crsr.fetchall()
+        print(procConfiaveis)
+        CapturarLeitura(idTorre,procConfiaveis)
+
+    except pyodbc.Error as err:
+        print("Something went wrong: {}".format(err))
+        print("Não foi possivel verificar os processos confiaveis da maquina.")
+
+
+def CapturarLeitura(idTorre,procConfiaveis):
     while True:
         dict_dados = []
         array_pids = []
@@ -318,8 +333,16 @@ def CapturarLeitura(idTorre):
 
         print(colorama.Fore.RESET)
         print(f"\r")
-        InserirDados(idTorre,dict_dados)
-        # AtualizarProcessos(idTorre,json_dados)
+        for x in dict_dados:
+            for y in procConfiaveis:
+                print(x["name"])
+                print(y[0])
+                print(x["pid"])
+                print(y[1])
+                if x["name"] == y[0] and x["pid"] == y[1]:
+                    print("Confiavel:",x["name"])
+
+        # InserirDados(idTorre,dict_dados)
         time.sleep(60)
 
         
