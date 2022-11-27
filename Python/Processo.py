@@ -308,7 +308,7 @@ def CapturarLeitura(idTorre):
             m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            dado = {"name":{n}, "pid":{p}, "status":{s}, "usoCpu":{c}, "usoRam":{m}, "dataCriacao":{d}, "confiavel":{nao}}
+            dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao}
             dict_dados.append(dado)
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
@@ -361,7 +361,7 @@ def InserirTodosDados(idTorre,dict_dados):
         print(dataCriacao)
         confiavel = z["confiavel"]
         print(confiavel)
-        qtdProcessos = int(len(json_dados))
+        qtdProcessos = int(len(dict_dados))
         print(qtdProcessos)
         try:
             crsr.execute('''

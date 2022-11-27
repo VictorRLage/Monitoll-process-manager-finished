@@ -7,7 +7,8 @@ thisdict = {
   "model": "Mustang",
   "year": 1964
 }
-print(thisdict["brand"])
+c = thisdict["brand"]
+print(c)
 
 
 
