@@ -326,8 +326,8 @@ def CapturarLeitura(idTorre):
 def InserirDados(idTorre,dict_dados):
     try:
         crsr.execute('''
-        truncate table ProcessoDinamica
-        ''')
+        delete from ProcessoDinamica where fkTorre = ?
+        ''', idTorre)
     except pyodbc.Error as err:
         crsr.rollback()
         print("Something went wrong: {}".format(err))
