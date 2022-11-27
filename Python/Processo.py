@@ -191,7 +191,7 @@ def ValidarLogin(email, senha):
         usuario = crsr.fetchall()
         print("Login efetuado com sucesso")
         u_usuario = usuario[0]
-        print('Bem vindo {u_usuario}!')
+        print(f'Bem vindo {u_usuario}!')
         global fkEmpresa
         fkEmpresa = u_usuario[1]
         BuscarTorres(fkEmpresa)
