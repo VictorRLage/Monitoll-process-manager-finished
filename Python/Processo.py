@@ -5,6 +5,7 @@ import pyodbc
 import textwrap
 import subprocess
 import datetime
+from collections import Counter
 
 
 global strip_SerialIdAtual
@@ -305,7 +306,6 @@ def CapturarLeitura(idTorre,procConfiaveis):
         array_pids = []
         ConfiaveisAtivos = []
         naoConfiaveisAtivos = []
-        contador = 0
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
 
@@ -345,8 +345,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
                     usoCpuNC = x["usoCpu"]
                     usoRamNC = x["usoRam"]
                     dataCriacaoNC = x["dataCriacao"]
-                    contador += 1
-                    dadoNC = {"name":nomeNC,"pid":pidNC, "status":statusNC, "usoCpu":usoCpuNC, "usoRam":usoRamNC, "dataCriacao":dataCriacaoNC, "contador":contador}
+                    dadoNC = {"name":nomeNC,"pid":pidNC, "status":statusNC, "usoCpu":usoCpuNC, "usoRam":usoRamNC, "dataCriacao":dataCriacaoNC}
                     naoConfiaveisAtivos.append(dadoNC)
         print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivos)," processos NÃO confiaveis ativos")
@@ -355,12 +354,14 @@ def CapturarLeitura(idTorre,procConfiaveis):
         time.sleep(30)
 
 def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
+    naoConfiaveisAtivosReptindo= []
     for w in naoConfiaveisAtivos:
         name = w["name"]
-        if w["usoCpu"] > 80 or w["usoRam"] > 80:
+        if w["usoCpu"] > 0.2 or w["usoRam"] > 0.2:
+            naoConfiaveisAtivosReptindo.append(name)
             print("Alerta: "+name)
-        if w["contador"] >= 2:
-            print("Matar processo "+name)
+        contador = Counter(naoConfiaveisAtivosReptindo)
+        print(contador)
     InserirDados(idTorre,dict_dados)
         
 def InserirDados(idTorre,dict_dados):
