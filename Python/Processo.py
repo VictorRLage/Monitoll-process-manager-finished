@@ -357,7 +357,7 @@ def InserirTodosDados(idTorre,json_dados):
         print(z)
         nome = z["name"]
         pid = z["pid"]
-        status = z["Status"]
+        status = z["status"]
         usoCpu = z["usoCPU"]
         usoRam = z["usoRAM"]
         dataCriacao = z["dataCriacao"]
