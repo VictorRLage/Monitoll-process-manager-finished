@@ -308,7 +308,8 @@ def CapturarLeitura(idTorre):
             m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao}
+            h = datetime.now()
+            dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao, "dataHoraCaptura":h}
             dict_dados.append(dado)
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
@@ -337,6 +338,7 @@ def VerificarProcessos(idTorre,dict_dados):
         
 def InserirDados(idTorre,dict_dados):
     for z in dict_dados:
+        print
         nome = z["name"]
         print(nome)
         pid = z["pid"]
@@ -351,10 +353,12 @@ def InserirDados(idTorre,dict_dados):
         print(dataCriacao)
         confiavel = z["confiavel"]
         print(confiavel)
+        DataHora = z["dataHoraCaptura"]
+        print(DataHora)
         try:
             crsr.execute('''
-            insert into ProcessoDinamica values(?,?,?,?,?,?,?,?)
-            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel, idTorre)
+            insert into ProcessoDinamica values(?,?,?,?,?,?,?,?,?)
+            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel,DataHora, idTorre)
             # Executando comando SQL
             # Commit de mudanças no banco de dados
             crsr.commit()
