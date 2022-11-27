@@ -344,6 +344,9 @@ def InserirDados(idTorre,dict_dados):
         # print(DataHora)
         try:
             crsr.execute('''
+            truncate table ProcessoDinamica
+            ''')
+            crsr.execute('''
             insert into ProcessoDinamica values(?,?,?,?,?,?,?,?,?)
             ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel,DataHora, idTorre)
             crsr.commit()
@@ -351,6 +354,8 @@ def InserirDados(idTorre,dict_dados):
         except pyodbc.Error as err:
             crsr.rollback()
             print("Something went wrong: {}".format(err))
+    print(colorama.Fore.RESET)
+    print(f"\r")
     print("Primeiros processos cadastrados!")
 
 
