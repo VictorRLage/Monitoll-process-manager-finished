@@ -369,7 +369,7 @@ def InserirTodosDados(idTorre,json_dados):
         confiavel = z["confiavel"]
         print(confiavel[0])
         qtdProcessos = int(len(json_dados))
-        print(qtdProcessos[0])
+        print(qtdProcessos)
         try:
             crsr.execute('''
             insert into Processo values(?,?,?,?,?,?,?,?,?)
