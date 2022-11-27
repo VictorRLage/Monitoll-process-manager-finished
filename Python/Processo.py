@@ -261,7 +261,7 @@ def VerificarDadosMaquina(idTorre):
 
     if SerialIdBanco[0] != '':
         print("A torre possui dados cadastrados")
-        CapturarLeitura(idTorre)
+        VerificarConfiaveis(idTorre)
     else:
         print("A torre não possui dados")
         InserirDadosMaquina(strip_SerialIdAtual, strip3_OsAtual, strip3_MaquinaAtual,
@@ -278,7 +278,6 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         crsr.commit()
         print("Dados da maquina cadastrados!")
         VerificarConfiaveis(idTorre)
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCapturarLeitura(idTorre)
 
     except pyodbc.Error as err:
         crsr.rollback()
