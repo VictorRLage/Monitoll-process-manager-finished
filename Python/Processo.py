@@ -334,15 +334,11 @@ def CapturarLeitura(idTorre,procConfiaveis):
         print(f"\r")
         for x in dict_dados:
             for y in procConfiaveis:
-                # print('começo')
-                # print(y)
-                # print(x["name"])
-                # print(y[0])
-                # print(x["pid"])
-                # print(y[1])
-                # print('fim')
                 if x["name"] == y[0] and x["pid"] == y[1]:
                     print("Confiavel:",x["name"])
+                else: 
+                    print("Não Confiavel:",x["name"])
+        print(f"\r")
 
         # InserirDados(idTorre,dict_dados)
         time.sleep(60)
