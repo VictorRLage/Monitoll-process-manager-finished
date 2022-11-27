@@ -335,7 +335,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
         for x in dict_dados:
             for y in procConfiaveis:
                 print(x["name"])
-                print(y[0])
+                print(y)
                 print(x["pid"])
                 print(y[1])
                 if x["name"] == y[0] and x["pid"] == y[1]:
