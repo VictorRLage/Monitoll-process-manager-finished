@@ -4,6 +4,7 @@ import colorama
 import pyodbc
 import textwrap
 import subprocess
+import datetime
 
 
 global strip_SerialIdAtual
@@ -260,7 +261,7 @@ def VerificarDadosMaquina(idTorre):
 
     if SerialIdBanco[0] != '':
         print("A torre possui dados cadastrados")
-        InserirLeitura()
+        CapturarLeitura(idTorre)
     else:
         print("A torre não possui dados")
         InserirDadosMaquina(strip_SerialIdAtual, strip3_OsAtual, strip3_MaquinaAtual,
@@ -276,7 +277,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         # Commit de mudanças no banco de dados
         crsr.commit()
         print("Dados da maquina cadastrados!")
-        InserirLeitura()
+        CapturarLeitura(idTorre)
 
     except pyodbc.Error as err:
         crsr.rollback()
@@ -284,9 +285,9 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         print("Não foi possivel cadastrar os dados da maquina.")
         print("Por favor tente novamente mais tarde!")
 
-def InserirLeitura():
+def CapturarLeitura(idTorre):
     while True:
-        array_dados = []
+        json_dados = []
         array_pids = []
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
@@ -305,8 +306,9 @@ def InserirLeitura():
             s = proc.status()
             c = float(proc.cpu_percent(interval=1)/nucleos)
             m = proc.memory_percent()
-            array_dados.append(
-                '{"name":c, "pid":p, "status":s, "uso_cpu":c, "uso_ram":m}')
+            d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
+            nao = "n"
+            json_dados.append('{"name":c, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao}')
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))
@@ -314,9 +316,26 @@ def InserirLeitura():
 
         print(colorama.Fore.RESET)
         print(f"\r")
-        print(array_dados)
-        print(len(array_dados))
+        VerificarProcessos(idTorre,json_dados)
+        # AtualizarProcessos(idTorre,json_dados)
         time.sleep(30)
+
+def VerificarProcessos(idTorre,json_dados):
+    lenDados = len(json_dados)
+    try:
+        crsr.execute('''
+        SELECT TOP ? * FROM Processo WHERE idTorre = ? ORDER BY idProcesso DESC
+        ''', lenDados,idTorre)
+        # Executando comando SQL
+        # Commit de mudanças no banco de dados
+        array_proc = crsr.fetchall()
+        print('pinto')
+        print(array_proc)
+        print('pinto')
+
+    except pyodbc.Error as err:
+        crsr.rollback()
+        print("Something went wrong: {}".format(err))
 
 
 
