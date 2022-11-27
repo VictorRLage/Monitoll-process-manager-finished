@@ -308,7 +308,7 @@ def CapturarLeitura(idTorre):
             m = proc.memory_percent()
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            json_dados.append('{"name":c, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao}')
+            json_dados.append(f'{"name":{c}, "pid":{p}, "status":{s}, "usoCpu":{c}, "usoRam":{m}, "dataCriacao":{d}, "confiavel":{nao}}')
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))
