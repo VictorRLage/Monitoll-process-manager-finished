@@ -309,15 +309,8 @@ def CapturarLeitura(idTorre):
             m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            dict_dados.append({
-                    "name":"{n}",
-                    "pid":"{p}", 
-                    "status":"{s}", 
-                    "usoCpu":"{c}", 
-                    "usoRam":"{m}", 
-                    "dataCriacao":"{d}", 
-                    "confiavel":"{nao}"
-                    })
+            dado = {"name":{n}, "pid":{p}, "status":{s}, "usoCpu":{c}, "usoRam":{m}, "dataCriacao":{d}, "confiavel":{nao}}
+            dict_dados.append(dado)
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))

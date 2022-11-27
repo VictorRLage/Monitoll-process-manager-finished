@@ -1,9 +1,9 @@
 import psutil
 import time
 import datetime
-
+a = "Ford"
 thisdict = {
-  "brand": "Ford",
+  "brand": a,
   "model": "Mustang",
   "year": 1964
 }
