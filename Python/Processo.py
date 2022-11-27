@@ -324,14 +324,17 @@ def VerificarProcessos(idTorre,json_dados):
     lenDados = len(json_dados)
     print(lenDados)
     print(idTorre)
+    intLenDados = int(lenDados)
     try:
         crsr.execute('''
         SELECT TOP (?) * FROM Processo WHERE fkTorre = ? ORDER BY idProcesso DESC
-        ''', idTorre, idTorre)
+        ''', intLenDados, idTorre)
         array_proc = crsr.fetchall()
-        print('pinto')
         print(array_proc)
-        print('pinto')
+        for x in array_proc:
+            for y in json_dados:
+                if x[0] == y.name:
+                    print(y.name)
 
     except pyodbc.Error as err:
         print('erro aqui')
