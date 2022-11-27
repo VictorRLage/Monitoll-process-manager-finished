@@ -284,6 +284,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         print("Something went wrong: {}".format(err))
         print("Não foi possivel cadastrar os dados da maquina.")
         print("Por favor tente novamente mais tarde!")
+        
 
 def CapturarLeitura(idTorre):
     while True:
@@ -307,9 +308,8 @@ def CapturarLeitura(idTorre):
             c = round(float(proc.cpu_percent(interval=1)/nucleos), 2)
             m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
-            nao = "n"
             h = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-            dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao, "dataHoraCaptura":h}
+            dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "dataHoraCaptura":h}
             dict_dados.append(dado)
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
@@ -346,18 +346,16 @@ def InserirDados(idTorre,dict_dados):
         # print(usoRam)
         dataCriacao = z["dataCriacao"]
         # print(dataCriacao)
-        confiavel = z["confiavel"]
-        # print(confiavel)
         DataHora = z["dataHoraCaptura"]
         # print(DataHora)
         try:
             crsr.execute('''
-            insert into ProcessoDinamica values(?,?,?,?,?,?,?,?,?)
-            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel,DataHora, idTorre)
+            insert into ProcessoDinamica values(?,?,?,?,?,?,?,?)
+            ''', nome, pid, status, usoCpu, usoRam, dataCriacao,DataHora, idTorre)
 
             crsr.execute('''
-            insert into ProcessoBackup values(?,?,?,?,?,?,?,?,?)
-            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, confiavel, DataHora, idTorre)
+            insert into ProcessoBackup values(?,?,?,?,?,?,?,?)
+            ''', nome, pid, status, usoCpu, usoRam, dataCriacao, DataHora, idTorre)
 
             crsr.commit()
             progress_bar(i+1, len(dict_dados))
