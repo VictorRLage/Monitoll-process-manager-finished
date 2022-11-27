@@ -355,7 +355,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
 
 def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos):
     for w in naoConfiaveisAtivos:
-        if w["usoCpu"] > 0.1 or w["usoRam"] > 0.1:
+        if w["usoCpu"] > 0.5 or w["usoRam"] > 0.5:
             print('Alerta')
         
 def InserirDados(idTorre,dict_dados):
