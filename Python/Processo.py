@@ -370,14 +370,14 @@ def InserirTodosDados(idTorre,json_dados):
             # Executando comando SQL
             # Commit de mudanças no banco de dados
             crsr.commit()
-            print("Primeiros processos cadastrados!")
+            print("Cadastrou!")
 
         except pyodbc.Error as err:
             crsr.rollback()
             print("Something went wrong: {}".format(err))
             print("Não foi possivel cadastrar os primeiros processos.")
             print("Por favor tente novamente mais tarde!")
-        
+        print("Primeiros processos cadastrados!")
 
 
 
