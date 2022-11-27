@@ -308,7 +308,7 @@ def CapturarLeitura(idTorre):
             m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            h = datetime.now()
+            h = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "confiavel":nao, "dataHoraCaptura":h}
             dict_dados.append(dado)
 
