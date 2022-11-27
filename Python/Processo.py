@@ -288,7 +288,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
 def VerificarConfiaveis(idTorre):
     try:
         crsr.execute('''
-        SELECT * FROM ProcessoConfiavel WHERE idTorre = ?
+        SELECT * FROM ProcessoConfiavel WHERE fkTorre = ?
         ''', idTorre)
         # Executando comando SQL
         procConfiaveis = crsr.fetchall()
