@@ -308,7 +308,15 @@ def CapturarLeitura(idTorre):
             m = proc.memory_percent()
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            json_dados.append(f'{"name":{c}, "pid":{p}, "status":{s}, "usoCpu":{c}, "usoRam":{m}, "dataCriacao":{d}, "confiavel":{nao}}')
+            json_dados.append({
+                    "name":{c},
+                    "pid":{p}, 
+                    "status":{s}, 
+                    "usoCpu":{c}, 
+                    "usoRam":{m}, 
+                    "dataCriacao":{d}, 
+                    "confiavel":{nao}
+                    })
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))
@@ -347,13 +355,13 @@ def VerificarProcessos(idTorre,json_dados):
 def InserirTodosDados(idTorre,json_dados):
     for z in json_dados:
         print(z)
-        nome = z.name
-        pid = z.pid
-        status = z.Status
-        usoCpu = z.usoCPU
-        usoRam = z.usoRAM
-        dataCriacao = z.dataCriacao
-        confiavel = z.confiavel
+        nome = z["name"]
+        pid = z["pid"]
+        status = z["Status"]
+        usoCpu = z["usoCPU"]
+        usoRam = z["usoRAM"]
+        dataCriacao = z["dataCriacao"]
+        confiavel = z["confiavel"]
         qtdProcessos = int(len(json_dados))
         try:
             crsr.execute('''
