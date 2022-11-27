@@ -304,12 +304,12 @@ def CapturarLeitura(idTorre):
             n = proc.name()
             p = proc.ppid()
             s = proc.status()
-            c = float(proc.cpu_percent(interval=1)/nucleos)
-            m = proc.memory_percent()
+            c = round(float(proc.cpu_percent(interval=1)/nucleos), 2)
+            m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
             json_dados.append({
-                    "name":{c},
+                    "name":{n},
                     "pid":{p}, 
                     "status":{s}, 
                     "usoCpu":{c}, 
@@ -378,6 +378,7 @@ def InserirTodosDados(idTorre,json_dados):
             print("Não foi possivel cadastrar os primeiros processos.")
             print("Por favor tente novamente mais tarde!")
         print("Primeiros processos cadastrados!")
+        time.sleep(5)
 
 
 
