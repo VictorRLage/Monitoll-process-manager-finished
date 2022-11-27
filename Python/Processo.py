@@ -366,7 +366,7 @@ def InserirDados(idTorre,dict_dados):
             print("Something went wrong: {}".format(err))
     print(colorama.Fore.RESET)
     print(f"\r")
-    print("Primeiros processos cadastrados!")
+    print("Processos cadastrados!")
     print(f"\r")
 
 
