@@ -357,12 +357,19 @@ def InserirTodosDados(idTorre,json_dados):
         nome = z["name"]
         print(nome)
         pid = z["pid"]
+        print(pid)
         status = z["status"]
+        print(status)
         usoCpu = z["usoCpu"]
+        print(usoCpu)
         usoRam = z["usoRam"]
+        print(usoRam)
         dataCriacao = z["dataCriacao"]
+        print(dataCriacao)
         confiavel = z["confiavel"]
+        print(confiavel)
         qtdProcessos = int(len(json_dados))
+        print(qtdProcessos)
         try:
             crsr.execute('''
             insert into Processo values(?,?,?,?,?,?,?,?,?)
