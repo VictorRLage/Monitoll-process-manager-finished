@@ -355,21 +355,21 @@ def VerificarProcessos(idTorre,json_dados):
 def InserirTodosDados(idTorre,json_dados):
     for z in json_dados:
         nome = z["name"]
-        print(nome)
+        print(nome[0])
         pid = z["pid"]
-        print(pid)
+        print(pid[0])
         status = z["status"]
-        print(status)
+        print(status[0])
         usoCpu = z["usoCpu"]
-        print(usoCpu)
+        print(usoCpu[0])
         usoRam = z["usoRam"]
-        print(usoRam)
+        print(usoRam[0])
         dataCriacao = z["dataCriacao"]
-        print(dataCriacao)
+        print(dataCriacao[0])
         confiavel = z["confiavel"]
-        print(confiavel)
+        print(confiavel[0])
         qtdProcessos = int(len(json_dados))
-        print(qtdProcessos)
+        print(qtdProcessos[0])
         try:
             crsr.execute('''
             insert into Processo values(?,?,?,?,?,?,?,?,?)
