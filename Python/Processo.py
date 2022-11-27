@@ -230,9 +230,12 @@ def BuscarComponentes(idTorre):
         SELECT fkComponente FROM Torre_Componente WHERE Torre_Componente.fkTorre = ?
         ''', idTorre)
         fkComponentes = crsr.fetchall()
-        if 25 in fkComponentes:
-            VerificarDadosMaquina(idTorre)
-        else:
+        idProcessos = True
+        for x in fkComponentes:
+            if x[0] == 25:
+                idProcessos = True
+                VerificarDadosMaquina(idTorre)
+        if not idProcessos:
             print('Você não selecionou a captura de processos como parte do seu plano para esta maquina.')
             print('Por favor entre em contato com a gente para aumentar seu plano!')
 
@@ -273,6 +276,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         # Commit de mudanças no banco de dados
         crsr.commit()
         print("Dados da maquina cadastrados!")
+        InserirLeitura()
 
     except pyodbc.Error as err:
         crsr.rollback()
