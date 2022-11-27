@@ -288,7 +288,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
 
 def CapturarLeitura(idTorre):
     while True:
-        json_dados = []
+        dict_dados = []
         array_pids = []
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
@@ -309,7 +309,7 @@ def CapturarLeitura(idTorre):
             m = round(proc.memory_percent(), 2)
             d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
             nao = "n"
-            json_dados.append({
+            dict_dados.append({
                     "name":{n},
                     "pid":{p}, 
                     "status":{s}, 
@@ -325,12 +325,12 @@ def CapturarLeitura(idTorre):
 
         print(colorama.Fore.RESET)
         print(f"\r")
-        VerificarProcessos(idTorre,json_dados)
+        VerificarProcessos(idTorre,dict_dados)
         # AtualizarProcessos(idTorre,json_dados)
         time.sleep(30)
 
-def VerificarProcessos(idTorre,json_dados):
-    lenDados = len(json_dados)
+def VerificarProcessos(idTorre,dict_dados):
+    lenDados = len(dict_dados)
     print(lenDados)
     print(idTorre)
     intLenDados = int(lenDados)
@@ -341,10 +341,10 @@ def VerificarProcessos(idTorre,json_dados):
         array_proc = crsr.fetchall()
         print(array_proc)
         if len(array_proc) == 0:
-            InserirTodosDados(idTorre,json_dados)
+            InserirTodosDados(idTorre,dict_dados)
         else:
             for x in array_proc:
-                for y in json_dados:
+                for y in dict_dados:
                     if x[0] == y.name:
                         print(y.name)
 
@@ -353,7 +353,8 @@ def VerificarProcessos(idTorre,json_dados):
         print("Something went wrong: {}".format(err))
 
         
-def InserirTodosDados(idTorre,json_dados):
+def InserirTodosDados(idTorre,dict_dados):
+    json_dados = json.dumps(dict_dados)
     json_dados2 = json.loads(json_dados)
     for z in json_dados2:
         nome = z["name"]
