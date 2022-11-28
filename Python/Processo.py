@@ -323,7 +323,7 @@ def CapturarLeitura(idTorre):
         # print("NOME | PID | STATUS | USO CPU | USO RAM")
         for i, proc in enumerate(psutil.process_iter()):
             n = proc.name()
-            p = proc.pid()
+            p = str(proc.pid())
             s = proc.status()
             c = round(float(proc.cpu_percent(interval=1)/nucleos), 2)
             m = round(proc.memory_percent(), 2)
