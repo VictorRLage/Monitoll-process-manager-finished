@@ -355,8 +355,9 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
             print("Alerta: "+name)
     contador = Counter(naoConfiaveisAtivosReptindo)
     for l in contador:
-        print(l)
-        
+        v = str(l)
+        o = l[v]
+        print(o)
     InserirDados(idTorre,dict_dados)
         
 def InserirDados(idTorre,dict_dados):
