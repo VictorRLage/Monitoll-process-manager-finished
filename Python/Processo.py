@@ -332,7 +332,7 @@ def CapturarLeitura(idTorre):
             dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "dataHoraCaptura":h}
             dict_dados.append(dado)
             naoConfiaveisAtivos.append(dado)
-            naoConfiaveisAtivosDinamico.append(dado)
+            naoConfiaveisAtivosDinamico.append(dado["pid"])
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))
@@ -345,7 +345,7 @@ def CapturarLeitura(idTorre):
                 if x["name"] == y[0] and x["pid"] == y[1]:
                     ConfiaveisAtivos.append(x["pid"])
                     naoConfiaveisAtivos.remove(x)
-                    naoConfiaveisAtivosDinamico.remove(x)
+                    naoConfiaveisAtivosDinamico.remove(x["pid"])
                     print(naoConfiaveisAtivosDinamico)
         print(colorama.Fore.GREEN +"Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados",len(naoConfiaveisAtivosDinamico),"processos NÃO confiaveis ativos")
