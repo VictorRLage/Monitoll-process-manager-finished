@@ -262,7 +262,7 @@ def VerificarDadosMaquina(idTorre):
 
     if SerialIdBanco[0] != '':
         print("A torre possui dados cadastrados")
-        VerificarConfiaveis(idTorre)
+        CapturarLeitura(idTorre)
     else:
         print("A torre não possui dados")
         InserirDadosMaquina(strip_SerialIdAtual, strip3_OsAtual, strip3_MaquinaAtual,
