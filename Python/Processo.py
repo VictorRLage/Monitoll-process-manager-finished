@@ -356,7 +356,7 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
     naoConfiaveisAtivosReptindo= []
     for w in naoConfiaveisAtivos:
         name = w["name"]
-        if w["usoCpu"] > 0.2 or w["usoRam"] > 0.2:
+        if w["usoCpu"] > 80 or w["usoRam"] > 80:
             naoConfiaveisAtivosReptindo.append(name)
     contador = {}
     for element in naoConfiaveisAtivosReptindo:
