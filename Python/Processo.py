@@ -313,7 +313,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
 
         # print(array_pids)
         # print(len(array_pids))
-
+        print(f"\r")
         print('Capturando Leitura!')
         nucleos = psutil.cpu_count()
 
@@ -324,7 +324,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
             s = proc.status()
             c = round(float(proc.cpu_percent(interval=1)/nucleos), 2)
             m = round(proc.memory_percent(), 2)
-            d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%Y-%m-%d %H:%M:%S")
+            d = datetime.datetime.fromtimestamp(proc.create_time()).strftime("%d/%m/%Y %H:%M:%S")
             h = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "dataHoraCaptura":h}
             dict_dados.append(dado)
@@ -374,6 +374,7 @@ def InserirDados(idTorre,dict_dados):
         crsr.rollback()
         print("Something went wrong: {}".format(err))
 
+    print(f"\r")
     print('Inserindo leitura no banco de dados!')
     for i, z in enumerate(dict_dados):
         nome = z["name"]
