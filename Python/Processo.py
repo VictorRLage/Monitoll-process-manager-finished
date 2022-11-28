@@ -345,8 +345,9 @@ def CapturarLeitura(idTorre):
                 if x["name"] == y[0] and x["pid"] == y[1]:
                     ConfiaveisAtivos.append(x["pid"])
                     naoConfiaveisAtivos.remove(x)
-        print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
-        print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivosDinamico)," processos NÃO confiaveis ativos")
+                    naoConfiaveisAtivosDinamico.remove(x)
+        print(colorama.Fore.GREEN +"Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
+        print(colorama.Fore.RED +"Foram encontrados",len(naoConfiaveisAtivosDinamico),"processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
         VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados)
         time.sleep(30)
