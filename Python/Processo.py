@@ -360,9 +360,8 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
         contador[element] += 1
     print(contador)
     for l in contador:
-        print(contador[l])
-
-        
+        if contador[l] >= 3:
+            print("Matar:"+l)
     InserirDados(idTorre,dict_dados)
         
 def InserirDados(idTorre,dict_dados):
