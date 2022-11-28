@@ -346,6 +346,7 @@ def CapturarLeitura(idTorre):
                     ConfiaveisAtivos.append(x["pid"])
                     naoConfiaveisAtivos.remove(x)
                     naoConfiaveisAtivosDinamico.remove(x)
+                    print(naoConfiaveisAtivosDinamico)
         print(colorama.Fore.GREEN +"Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados",len(naoConfiaveisAtivosDinamico),"processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
@@ -365,7 +366,7 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
         contador[element] += 1
     for l in contador:
         print("Alerta: "+l)
-        if contador[l] >= 12:
+        if contador[l] >= 6:
             print("Matar:"+l)
     InserirDados(idTorre,dict_dados)
         
