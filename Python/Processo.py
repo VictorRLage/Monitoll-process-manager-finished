@@ -278,7 +278,7 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         # Commit de mudanças no banco de dados
         crsr.commit()
         print("Dados da maquina cadastrados!")
-        VerificarConfiaveis(idTorre)
+        CapturarLeitura(idTorre)
 
     except pyodbc.Error as err:
         crsr.rollback()
@@ -286,23 +286,26 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed, idT
         print("Não foi possivel cadastrar os dados da maquina.")
         print("Por favor tente novamente mais tarde!")
 
-def VerificarConfiaveis(idTorre):
-    try:
-        crsr.execute('''
-        SELECT Nome,Pid FROM ProcessoConfiavel WHERE fkTorre = ?
-        ''', idTorre)
-        # Executando comando SQL
-        procConfiaveis = crsr.fetchall()
-        CapturarLeitura(idTorre,procConfiaveis)
 
-    except pyodbc.Error as err:
-        print("Something went wrong: {}".format(err))
-        print("Não foi possivel verificar os processos confiaveis da maquina.")
-
-
-def CapturarLeitura(idTorre,procConfiaveis):
+def CapturarLeitura(idTorre):
     naoConfiaveisAtivos = []
     while True:
+        # buscar confiaveis
+        try:
+            crsr.execute('''
+            SELECT Nome,Pid FROM ProcessoConfiavel WHERE fkTorre = ?
+            ''', idTorre)
+            # Executando comando SQL
+            procConfiaveis = crsr.fetchall()
+
+        except pyodbc.Error as err:
+            print("Something went wrong: {}".format(err))
+            print("Não foi possivel verificar os processos confiaveis da maquina.")
+
+
+
+
+
         dict_dados = []
         array_pids = []
         naoConfiaveisAtivosDinamico = []
