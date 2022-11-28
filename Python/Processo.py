@@ -305,6 +305,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
     while True:
         dict_dados = []
         array_pids = []
+        naoConfiaveisAtivosDinamico = []
         ConfiaveisAtivos = []
         for proc in psutil.process_iter(['pid']):
             array_pids.append(proc.pid)
@@ -328,6 +329,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
             dado = {"name":n, "pid":p, "status":s, "usoCpu":c, "usoRam":m, "dataCriacao":d, "dataHoraCaptura":h}
             dict_dados.append(dado)
             naoConfiaveisAtivos.append(dado)
+            naoConfiaveisAtivosDinamico.append(dado)
 
             # print(f"{n} | {p} | {s} | {c:.2f}% | {m:.2f}%")
             progress_bar(i+1, len(array_pids))
@@ -341,7 +343,7 @@ def CapturarLeitura(idTorre,procConfiaveis):
                     ConfiaveisAtivos.append(x["pid"])
                     naoConfiaveisAtivos.remove(x)
         print(colorama.Fore.GREEN +"Foram encontrados ",len(ConfiaveisAtivos)," processos confiaveis ativos")
-        print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivos)," processos NÃO confiaveis ativos")
+        print(colorama.Fore.RED +"Foram encontrados ",len(naoConfiaveisAtivosDinamico)," processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
         VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados)
         time.sleep(30)
@@ -358,9 +360,8 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
         if element not in contador:
             contador[element] = 0
         contador[element] += 1
-    print(contador)
     for l in contador:
-        if contador[l] >= 3:
+        if contador[l] >= 12:
             print("Matar:"+l)
     InserirDados(idTorre,dict_dados)
         
