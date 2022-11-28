@@ -346,7 +346,7 @@ def CapturarLeitura(idTorre):
                     ConfiaveisAtivos.append(x["pid"])
                     naoConfiaveisAtivos.remove(x)
                     naoConfiaveisAtivosDinamico.remove(x["pid"])
-                    print(naoConfiaveisAtivosDinamico)
+        print(naoConfiaveisAtivosDinamico)
         print(colorama.Fore.GREEN +"Foram encontrados",len(ConfiaveisAtivos),"processos confiaveis ativos")
         print(colorama.Fore.RED +"Foram encontrados",len(naoConfiaveisAtivosDinamico),"processos NÃO confiaveis ativos")
         print(colorama.Fore.RESET)
