@@ -360,7 +360,7 @@ def VerificarUsoNaoConfiavel(idTorre,naoConfiaveisAtivos,dict_dados):
         contador[element] += 1
     print(contador)
     for l in contador:
-        print(l)
+        print(l["snapd"])
         
     InserirDados(idTorre,dict_dados)
         
