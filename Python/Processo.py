@@ -301,9 +301,9 @@ def VerificarConfiaveis(idTorre):
 
 
 def CapturarLeitura(idTorre,procConfiaveis):
+    naoConfiaveisAtivos = []
     while True:
         dict_dados = []
-        naoConfiaveisAtivos = []
         array_pids = []
         ConfiaveisAtivos = []
         for proc in psutil.process_iter(['pid']):
