@@ -177,8 +177,8 @@ def Login():
 
     print("Bem vindo ao Grenn Light - Task Manager!")
     print("Login")
-    u_email = 'kaique@gmail.com'#input('Seu e-mail: ')
-    u_senha = '123'#input('Sua senha: ')
+    u_email = input('Seu e-mail: ')
+    u_senha = input('Sua senha: ')
     ValidarLogin(u_email, u_senha)
 
 
@@ -221,7 +221,7 @@ def BuscarTorres(fkEmpresa):
 def EscolherTorres(idTorres):
     for x in idTorres:
         print('Maquina:', x[0])
-    idTorre = '162'#input('Qual é esta maquina? ')
+    idTorre = input('Qual é esta maquina? ')
     BuscarComponentes(idTorre)
 
 def BuscarComponentes(idTorre):
