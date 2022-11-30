@@ -293,7 +293,7 @@ def CapturarLeitura(idTorre):
         # buscar confiaveis
         try:
             crsr.execute('''
-            SELECT Nome,Pid FROM ProcessoConfiavel WHERE fkTorre = ?
+            SELECT Nome FROM ProcessoConfiavel WHERE fkTorre = ?
             ''', idTorre)
             # Executando comando SQL
             procConfiaveis = crsr.fetchall()
@@ -342,7 +342,7 @@ def CapturarLeitura(idTorre):
         print(f"\r")
         for x in dict_dados:
             for y in procConfiaveis:
-                if x["name"] == y[0] and x["pid"] == y[1]:
+                if x["name"] == y[0]:
                     ConfiaveisAtivos.append(x["pid"])
                     naoConfiaveisAtivos.remove(x)
                     naoConfiaveisAtivosDinamico.remove(x["pid"])
