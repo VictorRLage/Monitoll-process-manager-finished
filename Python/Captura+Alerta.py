@@ -206,7 +206,7 @@ def ValidarLogin(email, senha):
         usuario = crsr.fetchall()
         print("Login efetuado com sucesso")
         u_usuario = usuario[0]
-        print(u_usuario)
+        print(f'Bem vindo {u_usuario[0]}!')
         global fkEmpresa
         fkEmpresa = u_usuario[1]
         global v_login
@@ -381,6 +381,10 @@ def BuscarMetricas(idComponente, idEmpresa):
 
     except pyodbc.Error as err:
         print("Something went wrong: {}".format(err))
+    print(m_cpu)
+    print(m_ram)
+    print(m_disco)
+    print(m_net)
 
 
 # Conexão incial e estrutura de repeticão
