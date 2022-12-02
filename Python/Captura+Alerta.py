@@ -389,91 +389,90 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
 
 #
 def VerificarMetricas(Leitura,NomeComponente,idComponente,idTorre):
-    print(m_cpu[0][0])
     if idComponente == 2:
-        if Leitura > m_cpu[0] and Leitura < m_cpu[1]:
+        if Leitura > m_cpu[0][0] and Leitura < m_cpu[1][0]:
             print(f'''
-            Alerta: Acima do Normal - {m_cpu[0]}%
+            Alerta: Acima do Normal - {m_cpu[0][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_cpu[1] and Leitura < m_cpu[2]:
+        elif Leitura > m_cpu[1][0] and Leitura < m_cpu[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_cpu[1]}%
+            Alerta: Acima de Atencão - {m_cpu[1][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_cpu[2]:
+        elif Leitura > m_cpu[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_cpu[2]}%
+            Alerta: Acima de Atencão - {m_cpu[2][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
     if idComponente == 5:
-        if Leitura > m_ram[0] and Leitura < m_ram[1]:
+        if Leitura > m_ram[0][0] and Leitura < m_ram[1][0]:
             print(f'''
-            Alerta: Acima do Normal - {m_ram[0]}%
+            Alerta: Acima do Normal - {m_ram[0][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_ram[1] and Leitura < m_ram[2]:
+        elif Leitura > m_ram[1][0] and Leitura < m_ram[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_ram[1]}%
+            Alerta: Acima de Atencão - {m_ram[1][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_ram[2]:
+        elif Leitura > m_ram[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_ram[2]}%
+            Alerta: Acima de Atencão - {m_ram[2][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
     if idComponente == 9:
-        if Leitura > m_disco[0] and Leitura < m_disco[1]:
+        if Leitura > m_disco[0][0] and Leitura < m_disco[1][0]:
             print(f'''
-            Alerta: Acima do Normal - {m_disco[0]}%
+            Alerta: Acima do Normal - {m_disco[0][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_disco[1] and Leitura < m_disco[2]:
+        elif Leitura > m_disco[1][0] and Leitura < m_disco[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_disco[1]}%
+            Alerta: Acima de Atencão - {m_disco[1][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_disco[2]:
+        elif Leitura > m_disco[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_disco[2]}%
+            Alerta: Acima de Atencão - {m_disco[2][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
     if idComponente == 12:
-        if Leitura > m_net[0] and Leitura < m_net[1]:
+        if Leitura > m_net[0][0] and Leitura < m_net[1][0]:
             print(f'''
-            Alerta: Acima do Normal - {m_net[0]}%
+            Alerta: Acima do Normal - {m_net[0][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_net[1] and Leitura < m_net[2]:
+        elif Leitura > m_net[1][0] and Leitura < m_net[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_net[1]}%
+            Alerta: Acima de Atencão - {m_net[1][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
             ''')
-        elif Leitura > m_net[2]:
+        elif Leitura > m_net[2][0]:
             print(f'''
-            Alerta: Acima de Atencão - {m_net[2]}%
+            Alerta: Acima de Atencão - {m_net[2][0]}%
             Leitura: {Leitura}
             Componente: CPU
             Torre: {idTorre}
