@@ -383,12 +383,16 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
             crsr.rollback()
             print("Something went wrong: {}".format(err))
         print("Leitura inserida no banco")
-        VerificarMetricas(var_leitura2, Nome, idComponente, idTorre)
+        VerificarMetricas(var_leitura2, idComponente, idTorre)
 
 
 
 #
-def VerificarMetricas(Leitura,NomeComponente,idComponente,idTorre):
+def VerificarMetricas(Leitura,idComponente,idTorre):
+    print(m_cpu)
+    print(m_ram)
+    print(m_disco)
+    print(m_net)
     if idComponente == 2:
         if Leitura > int(m_cpu[0][0]) and Leitura < int(m_cpu[1][0]):
             print(f'''
