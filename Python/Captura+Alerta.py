@@ -238,6 +238,38 @@ def BuscarTorres(fkEmpresa):
         print("Something went wrong: {}".format(err))
 
 
+
+m_cpu = []
+m_ram = []
+m_disco = []
+m_net = []
+# Buscar as metricas de cada componente
+def BuscarMetricas(idComponente, idEmpresa):
+    try:
+        crsr.execute('''
+        select Normall,Atencao,Critico from  luigi_Metricas where fkComponente = ? and fkEmpresa = ?
+        ''',idComponente, idEmpresa)
+        Metricas = crsr.fetchall()
+
+        if idComponente == 2:
+            for x in Metricas:
+                m_cpu.append(x)
+        elif idComponente == 5:
+            for x in Metricas:
+                m_ram.append(x)
+        elif idComponente == 9:
+            for x in Metricas:
+                m_disco.append(x)                
+        elif idComponente == 12:
+            for x in Metricas:
+                m_net.append(x)
+        print('Metricas recabidas do banco')
+
+    except pyodbc.Error as err:
+        print("Something went wrong: {}".format(err))
+
+
+
 # Mostrar as torres para o cliente e pedir para ele escolher qual é essa
 def EscolherTorres(idTorres):
     for x in idTorres:
@@ -351,40 +383,101 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
             crsr.rollback()
             print("Something went wrong: {}".format(err))
         print("Leitura inserida no banco")
-        
+        VerificarMetricas(var_leitura2, Nome, idComponente, idTorre)
 
 
-m_cpu = []
-m_ram = []
-m_disco = []
-m_net = []
-# Buscar as metricas de cada componente
-def BuscarMetricas(idComponente, idEmpresa):
-    try:
-        crsr.execute('''
-        select Normall,Atencao,Critico from  luigi_Metricas where fkComponente = ? and fkEmpresa = ?
-        ''',idComponente, idEmpresa)
-        Metricas = crsr.fetchall()
 
-        if idComponente == 2:
-            for x in Metricas:
-                m_cpu.append(x)
-        elif idComponente == 5:
-            for x in Metricas:
-                m_ram.append(x)
-        elif idComponente == 9:
-            for x in Metricas:
-                m_disco.append(x)                
-        elif idComponente == 12:
-            for x in Metricas:
-                m_net.append(x)
+#
+def VerificarMetricas(Leitura,NomeComponente,idComponente,idTorre):
+    if idComponente == 2:
+        if Leitura > m_cpu[0] and Leitura < m_cpu[1]:
+            print(f'''
+            Alerta: Acima do Normal - {m_cpu[0]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_cpu[1] and Leitura < m_cpu[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_cpu[1]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_cpu[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_cpu[2]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+    if idComponente == 5:
+        if Leitura > m_ram[0] and Leitura < m_ram[1]:
+            print(f'''
+            Alerta: Acima do Normal - {m_ram[0]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_ram[1] and Leitura < m_ram[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_ram[1]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_ram[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_ram[2]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+    if idComponente == 9:
+        if Leitura > m_disco[0] and Leitura < m_disco[1]:
+            print(f'''
+            Alerta: Acima do Normal - {m_disco[0]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_disco[1] and Leitura < m_disco[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_disco[1]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_disco[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_disco[2]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+    if idComponente == 12:
+        if Leitura > m_net[0] and Leitura < m_net[1]:
+            print(f'''
+            Alerta: Acima do Normal - {m_net[0]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_net[1] and Leitura < m_net[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_net[1]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
+        elif Leitura > m_net[2]:
+            print(f'''
+            Alerta: Acima de Atencão - {m_net[2]}%
+            Leitura: {Leitura}
+            Componente: CPU
+            Torre: {idTorre}
+            ''')
 
-    except pyodbc.Error as err:
-        print("Something went wrong: {}".format(err))
-    print(m_cpu)
-    print(m_ram)
-    print(m_disco)
-    print(m_net)
 
 
 # Conexão incial e estrutura de repeticão
