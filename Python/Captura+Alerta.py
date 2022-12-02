@@ -263,7 +263,7 @@ def BuscarMetricas(idComponente, idEmpresa):
         elif idComponente == 12:
             for x in Metricas:
                 m_net.append(x)
-        print('Metricas recabidas do banco')
+        print(f'Metricas do componente {idComponente} recebidas do banco')
 
     except pyodbc.Error as err:
         print("Something went wrong: {}".format(err))
@@ -389,6 +389,7 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
 
 #
 def VerificarMetricas(Leitura,NomeComponente,idComponente,idTorre):
+    print(m_cpu[0])
     if idComponente == 2:
         if Leitura > m_cpu[0] and Leitura < m_cpu[1]:
             print(f'''
