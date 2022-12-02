@@ -389,8 +389,7 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
 
 #
 def VerificarMetricas(Leitura,NomeComponente,idComponente,idTorre):
-    x = m_cpu[0]
-    print(x[0])
+    print(m_cpu[0][0])
     if idComponente == 2:
         if Leitura > m_cpu[0] and Leitura < m_cpu[1]:
             print(f'''
