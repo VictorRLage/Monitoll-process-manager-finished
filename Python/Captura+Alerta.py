@@ -11,7 +11,8 @@ from errno import errorcode
 import subprocess
 
 # Bloco pegar serial id
-byte_SerialIdAtual = subprocess.check_output('''sudo dmidecode -s system-serial-number''', shell=True)
+byte_SerialIdAtual = subprocess.check_output(
+    '''sudo dmidecode -s system-serial-number''', shell=True)
 str_SerialIdAtual = byte_SerialIdAtual.decode('UTF-8')
 global strip_SerialIdAtual
 strip_SerialIdAtual = str_SerialIdAtual.strip('\n')
@@ -25,7 +26,8 @@ global strip3_OsAtual
 strip3_OsAtual = strip2_OsAtual.strip('\n')
 
 # Bloco pegar modelo maquina
-byte_MaquinaAtual = subprocess.check_output('''sudo dmidecode -t 1 | grep 'Product Name' | uniq''', shell=True)
+byte_MaquinaAtual = subprocess.check_output(
+    '''sudo dmidecode -t 1 | grep 'Product Name' | uniq''', shell=True)
 str_MaquinaAtual = byte_MaquinaAtual.decode('UTF-8')
 strip_MaquinaAtual = str_MaquinaAtual.strip('\tProduct')
 strip2_MaquinaAtual = strip_MaquinaAtual.strip(' Name: ')
@@ -33,34 +35,32 @@ global strip3_MaquinaAtual
 strip3_MaquinaAtual = strip2_MaquinaAtual.strip('\n')
 
 # Bloco pegar processador
-byte_ProcessadorAtual = subprocess.check_output('''lscpu | grep 'Model name:' | uniq''', shell=True)
+byte_ProcessadorAtual = subprocess.check_output(
+    '''lscpu | grep 'Model name:' | uniq''', shell=True)
 str_ProcessadorAtual = byte_ProcessadorAtual.decode('UTF-8')
 strip_ProcessadorAtual = str_ProcessadorAtual.strip('Model name:')
 global strip2_ProcessadorAtual
 strip2_ProcessadorAtual = strip_ProcessadorAtual.strip('\n')
 
-# Bloco pegar disco 
-byte_DiscoAtual = subprocess.check_output('''sudo lshw -class disk -class storage | grep -B1 'vendor' | head -1''', shell=True)
+# Bloco pegar disco
+byte_DiscoAtual = subprocess.check_output(
+    '''sudo lshw -class disk -class storage | grep -B1 'vendor' | head -1''', shell=True)
 str_DiscoAtual = byte_DiscoAtual.decode('UTF-8')
 strip_DiscoAtual = str_DiscoAtual.strip('\tproduct: ')
 global strip2_DiscoAtual
 strip2_DiscoAtual = strip_DiscoAtual.strip('\n')
 
 # Bloco pegar velocidade da ram
-byte_RamAtual = subprocess.check_output('''sudo dmidecode --type memory | grep -B1 'Type Detail: ' | head -1''', shell=True)
+byte_RamAtual = subprocess.check_output(
+    '''sudo dmidecode --type memory | grep -B1 'Type Detail: ' | head -1''', shell=True)
 str_RamAtual = byte_RamAtual.decode('UTF-8')
 strip_RamAtual = str_RamAtual.strip('\tType: ')
 global strip2_RamAtual
 strip2_RamAtual = strip_RamAtual.strip('\n')
 
 
-
-
-
-
 global v_login
 v_login = False
-
 
 
 # receber o login do cliente
@@ -74,7 +74,6 @@ def Login(conectado):
         ValidarLogin(u_email, u_senha)
     elif conectado == 0:
         print("Sem conexão com a internet.")
-
 
 
 # estabelecer conexao com Azure
@@ -118,15 +117,13 @@ def ConectarBancoAzure(nmr, login):
         print("Conexão com a Azure perdida")
         print(ex)
         conectado = 0
-        
-    
+
     if conectado == 0:
         ConectarBancoLocal(login)
     elif conectado == 3 and login == True:
         BuscarComponentes(idTorre)
     elif conectado == 3 and login == False:
         Login(conectado)
-
 
 
 # Estabelecer conexao com banco de dados local no docker
@@ -156,7 +153,6 @@ def ConectarBancoLocal(login):
                 time.sleep(10)
     else:
         print("Login ainda não efetuado")
-
 
 
 # Inserir leituras Banco local
@@ -197,8 +193,7 @@ def LeituraLocal(conn):
     print("Inserindo leitura no banco de dados local!")
 
 
-
-# Validar login do cliente 
+# Validar login do cliente
 def ValidarLogin(email, senha):
 
     try:
@@ -215,14 +210,13 @@ def ValidarLogin(email, senha):
         global fkEmpresa
         fkEmpresa = u_usuario[1]
         global v_login
-        v_login = True 
+        v_login = True
         BuscarTorres(fkEmpresa)
 
     except pyodbc.Error as err:
         print("Something went wrong: {}".format(err))
         print("Falha ao realizar login por favor tente novamente")
         v_login = False
-
 
 
 # Buscar as torres cadastradas na empresa do cliente
@@ -234,11 +228,14 @@ def BuscarTorres(fkEmpresa):
     ''', fkEmpresa)
         # Executando comando SQL)
         idTorres = crsr.fetchall()
+        BuscarMetricas(2,fkEmpresa)
+        BuscarMetricas(5,fkEmpresa)
+        BuscarMetricas(9,fkEmpresa)
+        BuscarMetricas(12,fkEmpresa)
         EscolherTorres(idTorres)
 
     except pyodbc.Error as err:
         print("Something went wrong: {}".format(err))
-
 
 
 # Mostrar as torres para o cliente e pedir para ele escolher qual é essa
@@ -248,7 +245,6 @@ def EscolherTorres(idTorres):
     global idTorre
     idTorre = input('Qual é esta maquina? ')
     VerificarDadosMaquina(idTorre)
-
 
 
 # Validar se as maquinas possuen seus dados (serialID, SO, Nome, Velicidade da RAM, Marca do Disco) já cadastrados
@@ -275,7 +271,6 @@ def VerificarDadosMaquina(idTorre):
                             strip2_ProcessadorAtual, strip2_DiscoAtual, strip2_RamAtual)
 
 
-
 # Cadastrar os dados (serialID, SO, Nome, Velicidade da RAM, Marca do Disco) da maquina
 def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed):
 
@@ -293,7 +288,6 @@ def InserirDadosMaquina(SerialID, OS, Maquina, Processador, Disco, RamSpeed):
         print("Something went wrong: {}".format(err))
 
 
-
 # Buscar os componentes q devem ser monitorados desta torre
 def BuscarComponentes(idTorre):
 
@@ -305,19 +299,19 @@ def BuscarComponentes(idTorre):
         ''', idTorre)
         fkComponente = crsr.fetchall()
         for x in fkComponente:
-            global idComponente
             idComponente = x[0]
-            print("Componente:",idComponente)
+            print("Componente:", idComponente)
             try:
                 crsr.execute('''
                     SELECT Codigo, Nome FROM Componente WHERE Componente.idComponente = ?
                     ''', idComponente)
                 # Executing the SQL command
-                print("Pegando codigo do componente ",idComponente,'.........')
                 Codigo = crsr.fetchone()
-                print(Codigo)
-                print("Codigo do componente ",idComponente,"(", Codigo[1],")",":",Codigo[0])
-                InserirLeitura(Codigo[0], Codigo[1], idComponente)
+                if idComponente > 12:
+                    print(f'O componente {idComponente} é em outra API!')
+                else:
+                    InserirLeitura(Codigo[0], Codigo[1], idComponente, idTorre)
+                
 
             except pyodbc.Error as err:
                 print("Something went wrong: {}".format(err))
@@ -328,27 +322,20 @@ def BuscarComponentes(idTorre):
 
 
 # Inserir os dados da leitura de cada componente
-def InserirLeitura(Codigo,Nome, idComponente):
-        print("Inserindo leitura no banco...")
+def InserirLeitura(Codigo,Nome, idComponente, idTorre):
         datahora = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-        print(datahora)
         exec(Nome + " = " + Codigo, globals())
         var_leitura = globals()[Nome]
         if Nome == 'processadores_nucleo_porcentagem':
             
-            print(var_leitura)
             var_leitura2 = mean(var_leitura)
-            print(var_leitura2)
         elif Nome == 'pacotes_perdidos_porcentagem':
             print('caiu no elif 1')
             var_leitura2 = round((((pacotes_perdidos_porcentagem[1] - pacotes_perdidos_porcentagem[0])/pacotes_perdidos_porcentagem[1])*100), 1)
         elif Nome == 'processadores_nucleo_porcentagem':
-            print('caiu no elif 2')
             var_leitura2 = numpy.mean(var_leitura) 
         else:
-            print('caiu no else')
             var_leitura2 = var_leitura
-        print(var_leitura2)
 
         
         try:
@@ -358,12 +345,42 @@ def InserirLeitura(Codigo,Nome, idComponente):
             ''',var_leitura2, datahora, idTorre , idComponente)
             # Commit de mudanças no banco de dados
             crsr.commit()
-            print("Leitura inserida no banco")
+            
 
         except pyodbc.Error as err:
             crsr.rollback()
             print("Something went wrong: {}".format(err))
+        print("Leitura inserida no banco")
+        
 
+
+m_cpu = []
+m_ram = []
+m_disco = []
+m_net = []
+# Buscar as metricas de cada componente
+def BuscarMetricas(idComponente, idEmpresa):
+    try:
+        crsr.execute('''
+        select Normall,Atencao,Critico from  luigi_Metricas where fkComponente = ? and fkEmpresa = ?
+        ''',idComponente, idEmpresa)
+        Metricas = crsr.fetchall()
+
+        if idComponente == 2:
+            for x in Metricas:
+                m_cpu.append(x)
+        elif idComponente == 5:
+            for x in Metricas:
+                m_ram.append(x)
+        elif idComponente == 9:
+            for x in Metricas:
+                m_disco.append(x)                
+        elif idComponente == 12:
+            for x in Metricas:
+                m_net.append(x)
+
+    except pyodbc.Error as err:
+        print("Something went wrong: {}".format(err))
 
 
 # Conexão incial e estrutura de repeticão
