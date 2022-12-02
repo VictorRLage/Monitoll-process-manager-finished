@@ -389,7 +389,7 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
 
 #
 def VerificarMetricas(Leitura,idComponente,idTorre):
-    print(m_cpu)
+    print(m_cpu[1])
     print(m_ram)
     print(m_disco)
     print(m_net)
