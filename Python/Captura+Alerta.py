@@ -389,10 +389,6 @@ def InserirLeitura(Codigo,Nome, idComponente, idTorre):
 
 #
 def VerificarMetricas(Leitura,idComponente,idTorre):
-    print(m_cpu[0])
-    print(m_ram)
-    print(m_disco)
-    print(m_net)
     if idComponente == 2:
         if Leitura > int(m_cpu[0][0]) and Leitura < int(m_cpu[0][1]):
             print(f'''
@@ -415,6 +411,7 @@ def VerificarMetricas(Leitura,idComponente,idTorre):
             Componente: CPU
             Torre: {idTorre}
             ''')
+            print('Nenhum alerta emitido')
     if idComponente == 5:
         if Leitura > int(m_ram[0][0]) and Leitura < int(m_ram[0][1]):
             print(f'''
@@ -437,6 +434,7 @@ def VerificarMetricas(Leitura,idComponente,idTorre):
             Componente: CPU
             Torre: {idTorre}
             ''')
+        print('Nenhum alerta emitido')
     if idComponente == 9:
         if Leitura > int(m_disco[0][0]) and Leitura < int(m_disco[0][1]):
             print(f'''
@@ -459,6 +457,7 @@ def VerificarMetricas(Leitura,idComponente,idTorre):
             Componente: CPU
             Torre: {idTorre}
             ''')
+        print('Nenhum alerta emitido')
     if idComponente == 12:
         if Leitura > int(m_net[0][0]) and Leitura < int(m_net[0][1]):
             print(f'''
@@ -481,6 +480,8 @@ def VerificarMetricas(Leitura,idComponente,idTorre):
             Componente: CPU
             Torre: {idTorre}
             ''')
+        print('Nenhum alerta emitido')
+        
 
 
 
